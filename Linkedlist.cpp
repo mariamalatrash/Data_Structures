@@ -6,16 +6,17 @@ struct Node {
 };
 struct Node *head;
 struct Node *tail;
-void Append(int n) {
+void InsertAtHead(int n) {
 	struct Node* tmp = new Node;
 	tmp->data = n;
 	tmp->next = head;
 	head = tmp;
 
 }
-void InsertAtHead(int x) {
+void Append(int x) {
 	struct Node* tmp = new Node;
 	tmp->data = x;
+	tmp->next = NULL;
 	if (head == NULL) {
 		head = tmp;
 		tail = tmp;
@@ -35,7 +36,7 @@ void InsertAtPosition(int x, int index) {
 	}
 	else {
 		struct Node* tmp = head;
-		for (int i = 0;i < index - 1;i++) {
+		for (int i = 1; i < index - 1; i++) {
 			tmp = tmp->next;
 		}
 		nod->next = tmp->next;
@@ -45,26 +46,43 @@ void InsertAtPosition(int x, int index) {
 	}
 
 }
-void DeleteAtPosition(int index) {}
+void DeleteAtPosition(int index) {
+	struct Node* tmp =head;
+	Node *del;
+	for (int i = 1; i < index - 1; i++) {
+		tmp = tmp->next;
+	}
+	del = tmp->next;
+	tmp->next = del->next;
+	free(del);
+}
 
 void Print() {
-	struct Node *temp = head;
-	while (temp != NULL) {
-		printf("%d->", temp->data);
-		temp = temp->next;
+	struct Node *nod = head;
+	while (nod != NULL) {
+		printf("%d->", nod->data);
+		nod = nod->next;
 	}
 	printf("\n");
 
 }
-void Reverse() {}
+void Reverse(Node* nod) {
+	Node* tmp = nod;
+	if (tmp != NULL) {
+		Reverse(tmp->next);
+		printf("%d->", tmp->data);
+	}
+}
 int main() {
 	head = NULL;
 	tail = NULL;
-	insertAtStart(4);
-	insertAtStart(5);
-	insertAtStart(46);
-	insertAT(6,3);
-	printNode();
+	Append(4);
+	Append(5);
+	Append(6);
+	Append(7);
+	Append(8);
+	Print();
+	Reverse(head);
 	getchar();
 
 
